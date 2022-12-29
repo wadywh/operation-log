@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/9/28 17:15
- */
 
-namespace Chance\Log\facades;
+namespace Operation\Log\facades;
 
-use Chance\Log\Facade;
+use Operation\Log\Facade;
 
 /**
  * @method static getLog()
@@ -18,6 +14,6 @@ class OperationLog extends Facade
 {
     protected static function getFacadeClass(): string
     {
-        return \Chance\Log\OperationLog::class;
+        return \Operation\Log\OperationLog::class;
     }
 }

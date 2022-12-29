@@ -1,40 +1,32 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/3/9 9:48
- */
 
-namespace Chance\Log;
+namespace Operation\Log;
 
 interface OperationLogInterface
 {
     /**
-     * Notes: 获取主键
-     * DateTime: 2022/10/8 10:55
+     * 获取主键
      * @param $model
      * @return string
      */
     public function getPk($model): string;
 
     /**
-     * Notes: 获取表名
-     * DateTime: 2022/9/28 17:22
+     * 获取表名
      * @param $model
      * @return string
      */
     public function getTableName($model): string;
 
     /**
-     * Notes: 获取数据库名
-     * DateTime: 2022/9/28 17:25
+     * 获取数据库名
      * @param $model
      * @return string
      */
     public function getDatabaseName($model): string;
 
     /**
-     * Notes: 执行SQL
-     * DateTime: 2022/9/28 17:29
+     * 执行SQL
      * @param $model
      * @param string $sql
      * @return mixed
@@ -42,16 +34,14 @@ interface OperationLogInterface
     public function executeSQL($model, string $sql);
 
     /**
-     * Notes: 获取模型上当前所有的属性
-     * DateTime: 2022/10/6 14:33
+     * 获取模型上当前所有的属性
      * @param $model
      * @return array
      */
     public function getAttributes($model): array;
 
     /**
-     * Notes: 获取模型上当前修改的属性
-     * DateTime: 2022/10/6 14:34
+     * 获取模型上当前修改的属性
      * @param $model
      * @return array
      */

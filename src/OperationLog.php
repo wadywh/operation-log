@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/3/9 10:27
- */
 
-namespace Chance\Log;
+namespace Operation\Log;
 
 /**
  * @method getPk($model)
@@ -65,8 +61,7 @@ class OperationLog
     }
 
     /**
-     * Notes: 获取表注释
-     * DateTime: 2021/12/31 13:13
+     * 获取表注释
      * @param $model
      * @return string
      */
@@ -98,8 +93,7 @@ class OperationLog
     }
 
     /**
-     * Notes: 获取字段注释
-     * DateTime: 2021/12/31 13:13
+     * 获取字段注释
      * @param $model
      * @param $field
      * @return string

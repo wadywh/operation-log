@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/10/8 10:24
- */
 
-namespace Chance\Log\orm\illuminate;
+namespace Operation\Log\orm\illuminate;
 
 use Illuminate\Database\ConnectionInterface as Query;
 use Illuminate\Database\Eloquent\Model;

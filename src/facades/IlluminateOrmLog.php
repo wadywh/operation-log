@@ -1,13 +1,9 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/10/6 15:15
- */
 
-namespace Chance\Log\facades;
+namespace Operation\Log\facades;
 
-use Chance\Log\Facade;
-use Chance\Log\orm\illuminate\Log;
+use Operation\Log\Facade;
+use Operation\Log\orm\illuminate\Log;
 use Illuminate\Database\Eloquent\Model;
 
 /**

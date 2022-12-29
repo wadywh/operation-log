@@ -1,22 +1,15 @@
 <?php
-/**
- * Created by PhpStorm
- * IUser Chance
- * Date 2021/12/31 11:10
- */
 
-namespace Chance\Log\orm\illuminate;
+namespace Operation\Log\orm\illuminate;
 
-use Chance\Log\OperationLog;
-use Chance\Log\OperationLogInterface;
-use Illuminate\Database\Capsule\Manager;
+use Operation\Log\OperationLog;
+use Operation\Log\OperationLogInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class Log extends OperationLog implements OperationLogInterface
 {
     /**
-     * DateTime: 2022/10/8 10:58
      * @param Model $model
      * @return string
      */
@@ -47,7 +40,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/9 13:15
      * @param Model $model
      * @param string $sql
      * @return array
@@ -108,7 +100,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/8 11:22
      * @param Model $model
      * @param array $data
      */
@@ -119,7 +110,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/8 11:22
      * @param Model $model
      * @param array $oldData
      * @param array $data
@@ -133,7 +123,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/8 11:22
      * @param Model $model
      * @param array $data
      */
@@ -144,7 +133,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/8 11:22
      * @param Model $model
      * @param array $data
      */
@@ -157,7 +145,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/8 11:22
      * @param Model $model
      * @param array $oldData
      * @param array $data
@@ -173,7 +160,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/8 11:22
      * @param Model $model
      * @param array $data
      */

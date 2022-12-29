@@ -1,13 +1,9 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/10/6 15:14
- */
 
-namespace Chance\Log\facades;
+namespace Operation\Log\facades;
 
-use Chance\Log\Facade;
-use Chance\Log\orm\think\Log;
+use Operation\Log\Facade;
+use Operation\Log\orm\think\Log;
 use think\Model;
 
 /**

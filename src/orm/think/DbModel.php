@@ -1,10 +1,6 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/10/7 11:44
- */
 
-namespace Chance\Log\orm\think;
+namespace Operation\Log\orm\think;
 
 use think\db\BaseQuery as Query;
 use think\Model;

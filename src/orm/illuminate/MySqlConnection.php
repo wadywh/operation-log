@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/10/8 9:54
- */
 
-namespace Chance\Log\orm\illuminate;
+namespace Operation\Log\orm\illuminate;
 
-use Chance\Log\facades\OperationLog;
+use Operation\Log\facades\OperationLog;
 
 class MySqlConnection extends \Illuminate\Database\MySqlConnection
 {

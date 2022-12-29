@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/10/7 16:19
- */
 
-namespace Chance\Log\orm\think;
+namespace Operation\Log\orm\think;
 
-use Chance\Log\facades\ThinkOrmLog;
+use Operation\Log\facades\ThinkOrmLog;
 use think\helper\Str;
 use think\Model;
 
@@ -93,8 +89,7 @@ class Query extends \think\db\Query
     }
 
     /**
-     * Notes: 生成Model对象
-     * DateTime: 2022/10/7 16:34
+     * 生成Model对象
      * @return Model
      */
     private function generateModel(): Model

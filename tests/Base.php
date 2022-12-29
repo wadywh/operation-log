@@ -1,14 +1,9 @@
 <?php
-/**
- * Created by PhpStorm
- * IUser Chance
- * Date 2021/12/31 16:40
- */
 
-namespace Chance\Log\Test;
+namespace Operation\Log\Test;
 
-use Chance\Log\orm\illuminate\MySqlConnection;
-use Chance\Log\orm\think\Query;
+use Operation\Log\orm\illuminate\MySqlConnection;
+use Operation\Log\orm\think\Query;
 use Illuminate\Database\Capsule\Manager;
 use Illuminate\Database\Connection;
 use PHPUnit\Framework\TestCase;
@@ -38,7 +33,7 @@ class Base extends TestCase
             "charset" => "utf8",
             "collation" => "utf8_unicode_ci",
             "prefix" => "tb_",
-            "modelNamespace" => "Chance\Log\Test\model\illuminate",
+            "modelNamespace" => "Operation\Log\Test\model\illuminate",
             "logKey" => "id",
         ]);
         $capsule->addConnection([
@@ -50,7 +45,7 @@ class Base extends TestCase
             "charset" => "utf8",
             "collation" => "utf8_unicode_ci",
             "prefix" => "tb_",
-            "modelNamespace" => "Chance\Log\Test\model\illuminate",
+            "modelNamespace" => "Operation\Log\Test\model\illuminate",
             "logKey" => "id",
         ], "default1");
         $capsule->setAsGlobal();
@@ -66,7 +61,7 @@ class Base extends TestCase
         Db::setConfig([
             "connections" => [
                 "mysql" => [
-                    "type" => \Chance\Log\orm\think\MySqlConnection::class,
+                    "type" => \Operation\Log\orm\think\MySqlConnection::class,
                     "hostname" => "mysql",
                     "database" => "test",
                     "username" => "root",
@@ -76,11 +71,11 @@ class Base extends TestCase
                     "prefix" => "tb_",
                     "builder" => Mysql::class,
                     "query" => Query::class,
-                    "modelNamespace" => "Chance\Log\Test\model\\think",
+                    "modelNamespace" => "Operation\Log\Test\model\\think",
                     "logKey" => "id",
                 ],
                 "default1" => [
-                    "type" => \Chance\Log\orm\think\MySqlConnection::class,
+                    "type" => \Operation\Log\orm\think\MySqlConnection::class,
                     "hostname" => "mysql1",
                     "database" => "test1",
                     "username" => "root",
@@ -90,7 +85,7 @@ class Base extends TestCase
                     "prefix" => "tb_",
                     "builder" => Mysql::class,
                     "query" => Query::class,
-                    "modelNamespace" => "Chance\Log\Test\model\\think",
+                    "modelNamespace" => "Operation\Log\Test\model\\think",
                     "logKey" => "id",
                 ],
             ]

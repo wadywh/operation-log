@@ -1,22 +1,16 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/3/9 11:18
- */
 
-namespace Chance\Log\orm\think;
+namespace Operation\Log\orm\think;
 
-use Chance\Log\OperationLog;
-use Chance\Log\OperationLogInterface;
+use Operation\Log\OperationLog;
+use Operation\Log\OperationLogInterface;
 use think\db\Raw;
-use think\facade\Db;
 use think\helper\Str;
 use think\Model;
 
 class Log extends OperationLog implements OperationLogInterface
 {
     /**
-     * DateTime: 2022/10/8 10:56
      * @param Model $model
      * @return string
      */
@@ -47,7 +41,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/9 13:06
      * @param Model $model
      * @param string $sql
      * @return mixed
@@ -116,7 +109,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/7 18:10
      * @param $model
      * @param array $data
      */
@@ -127,7 +119,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/7 18:10
      * @param Model $model
      * @param array $oldData
      * @param array $data
@@ -141,7 +132,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/7 18:10
      * @param Model $model
      * @param array $data
      */
@@ -152,7 +142,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/7 18:11
      * @param Model $model
      * @param array $data
      */
@@ -165,7 +154,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/7 18:11
      * @param Model $model
      * @param array $oldData
      * @param array $data
@@ -181,7 +169,6 @@ class Log extends OperationLog implements OperationLogInterface
     }
 
     /**
-     * DateTime: 2022/10/7 18:11
      * @param Model $model
      * @param array $data
      */

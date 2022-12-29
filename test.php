@@ -1,15 +1,11 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/9/27 9:39
- */
 
 require "vendor/autoload.php";
 
-use Chance\Log\facades\OperationLog;
-use Chance\Log\Test\Base;
-use Chance\Log\Test\model\illuminate\User as IUser;
-use Chance\Log\Test\model\think\User as TUser;
+use Operation\Log\facades\OperationLog;
+use Operation\Log\Test\Base;
+use Operation\Log\Test\model\illuminate\User as IUser;
+use Operation\Log\Test\model\think\User as TUser;
 use Illuminate\Database\Capsule\Manager;
 use think\facade\Db;
 

@@ -1,12 +1,8 @@
 <?php
-/**
- * Created by PhpStorm
- * Date 2022/10/8 9:56
- */
 
-namespace Chance\Log\orm\illuminate;
+namespace Operation\Log\orm\illuminate;
 
-use Chance\Log\facades\IlluminateOrmLog;
+use Operation\Log\facades\IlluminateOrmLog;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
@@ -64,12 +60,12 @@ class Builder extends \Illuminate\Database\Query\Builder
     public function truncate()
     {
         $this->deleteLog();
+
         parent::truncate();
     }
 
     /**
-     * Notes: 生成Model对象
-     * DateTime: 2022/10/8 10:22
+     * 生成Model对象
      * @return Model
      */
     private function generateModel(): Model

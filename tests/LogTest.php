@@ -1,15 +1,10 @@
 <?php
-/**
- * Created by PhpStorm
- * IUser Chance
- * Date 2021/12/31 16:50
- */
 
-namespace Chance\Log\Test;
+namespace Operation\Log\Test;
 
-use Chance\Log\facades\OperationLog;
-use Chance\Log\Test\model\illuminate\User as IUser;
-use Chance\Log\Test\model\think\User as TUser;
+use Operation\Log\facades\OperationLog;
+use Operation\Log\Test\model\illuminate\User as IUser;
+use Operation\Log\Test\model\think\User as TUser;
 
 class LogTest extends Base
 {

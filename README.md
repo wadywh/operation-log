@@ -1,10 +1,10 @@
 支持 Laravel 的 ORM 与 ThinkPHP 的 ORM 。可以生成增、删、改，包括批量增、删、改，以及 使用 DB 操作的日志。
 
-通过~~模型事件~~与获取器，自动生成可读性高的操作日志。2.0 版本已弃用模型事件，因为批量操作没有触发模型事件，使用模型事件无法覆盖所有模型对数据库的操作以及 DB 操作。
+通过获取器，自动生成可读性高的操作日志。因为批量操作没有触发模型事件，使用模型事件无法覆盖所有模型对数据库的操作以及 DB 操作。
 
 ### 安装
 
-> composer require chance-fyi/operation-log
+> composer require wadywh/operation-log
 
 ### Laravel 使用
 
@@ -28,7 +28,7 @@ return [
             ...
             ...
             // 模型所在的命名空间
-            "modelNamespace" => "Chance\Log\Test\model",
+            "modelNamespace" => "Operation\Log\Test\model",
             // 日志记录的主键
             "logKey" => "id",
         ],
@@ -42,7 +42,7 @@ return [
 
 ```php
 \Illuminate\Database\Connection::resolverFor('mysql', function ($connection, $database, $prefix, $config) {
-    return new \Chance\Log\orm\illuminate\MySqlConnection($connection, $database, $prefix, $config);
+    return new \Operation\Log\orm\illuminate\MySqlConnection($connection, $database, $prefix, $config);
 });
 ```
 
@@ -71,13 +71,13 @@ return [
             ...
             ...
             // 数据库类型
-            'type'            => \Chance\Log\orm\think\MySqlConnection::class,
+            'type'            => \Operation\Log\orm\think\MySqlConnection::class,
             // 指定查询对象
-            "query"           => \Chance\Log\orm\think\Query::class,
+            "query"           => \Operation\Log\orm\think\Query::class,
             // Builder类
             "builder"         => \think\db\builder\Mysql::class,
             // 模型所在的命名空间
-            "modelNamespace"  => "Chance\Log\Test\model",
+            "modelNamespace"  => "Operation\Log\Test\model",
             // 日志记录的主键
             "logKey"          => "id",
         ],
@@ -95,7 +95,7 @@ return [
 ```php
 <?php
 
-namespace Chance\Log\Test\model;
+namespace Operation\Log\Test\model;
 
 class User extends BaseModel
 {
@@ -110,9 +110,7 @@ class User extends BaseModel
 
 **表注释与字段注释**
 
-![image-20220309172842186](https://image.chance.fyi/image-20220309172842186.png)
-
-也可以在模型中通过`$tableComment`与`$columnComment`设置表注释与字段注释。
+可使用表自身注释和字段自身注释，也可以在模型中通过`$tableComment`与`$columnComment`设置表注释与字段注释。
 
 **获取器**
 
@@ -121,7 +119,7 @@ class User extends BaseModel
 ```php
 <?php
 
-namespace Chance\Log\Test\model;
+namespace Operation\Log\Test\model;
 
 class User extends BaseModel
 {
@@ -157,11 +155,11 @@ class User extends BaseModel
 ### 获取日志信息
 
 ```php
-\Chance\Log\facades\OperationLog::getLog();
+\Operation\Log\facades\OperationLog::getLog();
 ```
 
 ### 清除日志信息
 
 ```php
-\Chance\Log\facades\OperationLog::clearLog();
+\Operation\Log\facades\OperationLog::clearLog();
 ```

@@ -185,3 +185,9 @@ class User extends BaseModel
 ```php
 \Operation\Log\facades\OperationLog::setTableModelMapping($map);
 ```
+
+### 设置不查information_schema库
+
+```php
+\Operation\Log\facades\OperationLog::setExecInfoSchema(false);
+```

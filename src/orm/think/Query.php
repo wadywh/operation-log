@@ -2,6 +2,7 @@
 
 namespace Operation\Log\orm\think;
 
+use Operation\Log\facades\OperationLog;
 use Operation\Log\facades\ThinkOrmLog;
 use think\helper\Str;
 use think\Model;
@@ -97,9 +98,13 @@ class Query extends \think\db\Query
         if ($this->getModel()) {
             return $this->getModel();
         }
-
         $name = $this->getName();
-        $modelNamespace = $this->getConfig("modelNamespace") ?: "app\model";
+        $tableMap = OperationLog::getTableModelMapping();
+        if (isset($tableMap[$name])) {
+            $modelNamespace = $tableMap[$name];
+        } else {
+            $modelNamespace = $this->getConfig("modelNamespace") ?: "app\model";;
+        }
         $className = trim($modelNamespace, "\\") . "\\" . Str::studly($name);
         if (class_exists($className)) {
             $model = new $className;

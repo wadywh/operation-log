@@ -20,12 +20,6 @@ class OperationLog
     // 字段注释
     protected $columnComment;
 
-    // 表模型映射关系
-    protected $tableModelMapping = [];
-
-    // 是否查information_schema库获取注释信息
-    protected $execInfoSchema = true;
-
     // 日志
     protected $log = [""];
 
@@ -55,17 +49,22 @@ class OperationLog
 
     public function setTableModelMapping(array $map)
     {
-        $this->tableModelMapping = $map;
+        $GLOBALS['tableModelMapping'] = $map;
     }
 
     public function getTableModelMapping(): array
     {
-        return $this->tableModelMapping;
+        return $GLOBALS['tableModelMapping'] ?? [];
     }
 
     public function setExecInfoSchema(bool $exec)
     {
-        $this->execInfoSchema = $exec;
+        $GLOBALS['execInfoSchema'] = $exec;
+    }
+
+    public function getExecInfoSchema(): bool
+    {
+        return $GLOBALS['execInfoSchema'] ?? true;
     }
 
     public function beginTransaction()
@@ -89,7 +88,7 @@ class OperationLog
     public function getTableComment($model): string
     {
         $table = $this->getTableName($model);
-        if (isset($model->tableComment) || !$this->execInfoSchema) {
+        if (isset($model->tableComment) || !$this->getExecInfoSchema()) {
             return $model->tableComment ?: $table;
         }
 
@@ -121,7 +120,7 @@ class OperationLog
      */
     public function getColumnComment($model, $field): string
     {
-        if (isset($model->columnComment) || !$this->execInfoSchema) {
+        if (isset($model->columnComment) || !$this->getExecInfoSchema()) {
             return $model->columnComment[$field] ?? $field;
         }
 

@@ -10,6 +10,7 @@ use Operation\Log\Facade;
  * @method static setTableModelMapping(array $map)
  * @method static getTableModelMapping()
  * @method static setExecInfoSchema(bool $exec)
+ * @method static getExecInfoSchema()
  * @method static beginTransaction()
  * @method static rollBackTransaction()
  */

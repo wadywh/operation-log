@@ -154,7 +154,7 @@ class User extends BaseModel
 
 ### 模型单独设置不记录日志
 
-可在模型中设置`$notRecordLog = false`属性，该数据表的变更则不会生成操作日志。
+可在模型中设置`$notRecordLog = true`属性，该数据表的变更则不会生成操作日志。
 
 ```php
 <?php
@@ -164,7 +164,7 @@ namespace Operation\Log\Test\model;
 class User extends BaseModel
 {
     // 不生成操作日志
-    public bool $notRecordLog = false;
+    public bool $notRecordLog = true;
 }
 ```
 

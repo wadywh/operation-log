@@ -65,7 +65,7 @@ class Builder extends \Illuminate\Database\Query\Builder
     }
 
     /**
-     * 生成Model对象
+     * 生成Model对象t
      * @return Model
      */
     private function generateModel(): Model

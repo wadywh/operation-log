@@ -20,6 +20,12 @@ class OperationLog
     // 字段注释
     protected $columnComment;
 
+    // 表模型映射关系
+    protected $tableModelMapping = [];
+
+    // 是否查information_schema库获取注释信息
+    protected $execInfoSchema = true;
+
     // 日志
     protected $log = [""];
 
@@ -47,6 +53,21 @@ class OperationLog
         $this->log = [""];
     }
 
+    public function setTableModelMapping(array $map)
+    {
+        $this->tableModelMapping = $map;
+    }
+
+    public function getTableModelMapping(): array
+    {
+        return $this->tableModelMapping;
+    }
+
+    public function setExecInfoSchema(bool $exec)
+    {
+        $this->execInfoSchema = $exec;
+    }
+
     public function beginTransaction()
     {
         $this->log[] = "";
@@ -68,7 +89,7 @@ class OperationLog
     public function getTableComment($model): string
     {
         $table = $this->getTableName($model);
-        if (isset($model->tableComment)) {
+        if (isset($model->tableComment) || !$this->execInfoSchema) {
             return $model->tableComment ?: $table;
         }
 
@@ -100,7 +121,7 @@ class OperationLog
      */
     public function getColumnComment($model, $field): string
     {
-        if (isset($model->columnComment)) {
+        if (isset($model->columnComment) || !$this->execInfoSchema) {
             return $model->columnComment[$field] ?? $field;
         }
 
@@ -126,6 +147,9 @@ class OperationLog
 
     public function generateLog($model, string $type)
     {
+        if (isset($model->notRecordLog) && $model->notRecordLog) {
+            return true;
+        }
         $logKey = $model->logKey ?? $this->getPk($model);
         $typeText = [
             self::CREATED => "创建",

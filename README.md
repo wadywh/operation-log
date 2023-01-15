@@ -1,6 +1,6 @@
 支持 Laravel 的 ORM 与 ThinkPHP 的 ORM 。可以生成增、删、改，包括批量增、删、改，以及 使用 DB 操作的日志。
 
-通过获取器，自动生成可读性高的操作日志。因为批量操作没有触发模型事件，使用模型事件无法覆盖所有模型对数据库的操作以及 DB 操作。
+因为批量操作没有触发模型事件，使用模型事件无法覆盖所有模型对数据库的操作以及 DB 操作，所以通过获取器，自动生成可读性高的操作日志。
 
 ### 安装
 
@@ -8,7 +8,7 @@
 
 ### Laravel 使用
 
-首先在数据库的配置文件 `config/database.php` 中增加两个配置项 `modelNamespace` 和 `logKey`。
+首先在数据库的配置文件 `config/database.php` 中增加两个配置项 `modelNamespace` 和 `logKey`，如果项目通过注入表模型映射关系来确定模型命名空间，可不配置 `modelNamespace` 
 
 ```php
 <?php
@@ -110,7 +110,7 @@ class User extends BaseModel
 
 **表注释与字段注释**
 
-可使用表自身注释和字段自身注释，也可以在模型中通过`$tableComment`与`$columnComment`设置表注释与字段注释。
+可使用表自身注释和字段自身注释（前提是允许查询information_schema库且有查询权限），也可以在模型中通过`$tableComment`与`$columnComment`设置表注释与字段注释（优先级最高）。
 
 **获取器**
 
@@ -152,6 +152,22 @@ class User extends BaseModel
 }
 ```
 
+### 模型单独设置不记录日志
+
+可在模型中设置`$notRecordLog = false`属性，该数据表的变更则不会生成操作日志。
+
+```php
+<?php
+
+namespace Operation\Log\Test\model;
+
+class User extends BaseModel
+{
+    // 不生成操作日志
+    public bool $notRecordLog = false;
+}
+```
+
 ### 获取日志信息
 
 ```php
@@ -162,4 +178,10 @@ class User extends BaseModel
 
 ```php
 \Operation\Log\facades\OperationLog::clearLog();
+```
+
+### 注入表模型命名空间映射关系
+
+```php
+\Operation\Log\facades\OperationLog::setTableModelMapping($map);
 ```

@@ -5,6 +5,7 @@ namespace Operation\Log\orm\illuminate;
 use Operation\Log\facades\IlluminateOrmLog;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
+use Operation\Log\facades\OperationLog;
 
 class Builder extends \Illuminate\Database\Query\Builder
 {
@@ -71,7 +72,12 @@ class Builder extends \Illuminate\Database\Query\Builder
     private function generateModel(): Model
     {
         $name = $this->from;
-        $modelNamespace = $this->getConnection()->getConfig("modelNamespace") ?: "app\model";
+        $tableMap = OperationLog::getTableModelMapping();
+        if (isset($tableMap[$name])) {
+            $modelNamespace = $tableMap[$name];
+        } else {
+            $modelNamespace = $this->getConnection()->getConfig("modelNamespace") ?: "app\model";
+        }
         $className = trim($modelNamespace, "\\") . "\\" . Str::studly($name);
         if (class_exists($className)) {
             $model = new $className;

@@ -102,10 +102,11 @@ class Query extends \think\db\Query
         $tableMap = OperationLog::getTableModelMapping();
         if (isset($tableMap[$name])) {
             $modelNamespace = $tableMap[$name];
+            $className = trim($modelNamespace, "\\");
         } else {
             $modelNamespace = $this->getConfig("modelNamespace") ?: "app\model";;
+            $className = trim($modelNamespace, "\\") . "\\" . Str::studly($name);
         }
-        $className = trim($modelNamespace, "\\") . "\\" . Str::studly($name);
         if (class_exists($className)) {
             $model = new $className;
         } else {

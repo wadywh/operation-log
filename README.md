@@ -46,6 +46,21 @@ return [
 });
 ```
 
+注入表模型映射关系（可选）。
+
+```php
+\Operation\Log\facades\OperationLog::setTableModelMapping([
+    'test_user' => 'App\Models\Test\User',
+    'test_role' => 'App\Models\Test\Role',
+]);
+```
+
+配置不查information_schema库（可选）。
+
+```php
+\Operation\Log\facades\OperationLog::setExecInfoSchema(false);
+```
+
 ### ThinkPHP 使用
 
 在数据库的配置文件 config/database.php 中增加三个配置项 `query`、`modelNamespace` 和 `logKey`。

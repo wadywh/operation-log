@@ -75,10 +75,11 @@ class Builder extends \Illuminate\Database\Query\Builder
         $tableMap = OperationLog::getTableModelMapping();
         if (isset($tableMap[$name])) {
             $modelNamespace = $tableMap[$name];
+            $className = trim($modelNamespace, "\\");
         } else {
             $modelNamespace = $this->getConnection()->getConfig("modelNamespace") ?: "app\model";
+            $className = trim($modelNamespace, "\\") . "\\" . Str::studly($name);
         }
-        $className = trim($modelNamespace, "\\") . "\\" . Str::studly($name);
         if (class_exists($className)) {
             $model = new $className;
         } else {

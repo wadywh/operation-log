@@ -12,7 +12,7 @@ use Operation\Log\Facade;
  * @method static getOperationType()
  * @method static setTableModelMapping(array $map)
  * @method static setExecInfoSchema(bool $exec)
- * @method static setRecordClass(object $class)
+ * @method static setRecordClass($class)
  * @method static setRecordTypes(array $types)
  * @method static beginTransaction()
  * @method static rollBackTransaction()

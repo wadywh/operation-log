@@ -93,7 +93,7 @@ class OperationLog
         Singleton::getInstance()->setExecInfoSchema($exec);
     }
 
-    public function setRecordClass(object $class)
+    public function setRecordClass($class)
     {
         Singleton::getInstance()->setRecordClass($class);
     }

@@ -66,7 +66,7 @@ class Singleton
         return $this->recordTypes;
     }
 
-    public function setRecordClass(object $class)
+    public function setRecordClass($class)
     {
         $this->recordClass = new $class;
     }

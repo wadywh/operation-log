@@ -235,7 +235,7 @@ class OperationLog
             array_splice($this->log, -1, 1, end($this->log) . trim($logHeader . $log, "，") . PHP_EOL);
             $this->logByCurrent = trim($logHeader . $log, "，");
         }
-        $this->logModel = $this->getTableName($model);
+        $this->logModel = $model->$logKey;
         $this->operationType = $type;
         $this->logKey = $logKey;
         if (!empty($singleton->getRecordClass())) {

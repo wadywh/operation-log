@@ -26,8 +26,14 @@ class OperationLog
     // 单次日志
     protected $logByCurrent = '';
 
+    // 当前操作模型
+    protected $logModel;
+
     // 当前操作类型
     protected $operationType;
+
+    // 当前操作对象
+    protected $logKey;
 
     const CREATED = "created";
     const BATCH_CREATED = "batch_created";
@@ -65,9 +71,19 @@ class OperationLog
         $this->logByCurrent = '';
     }
 
+    public function getLogModel()
+    {
+        return $this->logModel;
+    }
+
     public function getOperationType(): string
     {
         return $this->operationType ?? '';
+    }
+
+    public function getLogKey()
+    {
+        return $this->logKey;
     }
 
     public function beginTransaction()
@@ -219,7 +235,9 @@ class OperationLog
             array_splice($this->log, -1, 1, end($this->log) . trim($logHeader . $log, "，") . PHP_EOL);
             $this->logByCurrent = trim($logHeader . $log, "，");
         }
+        $this->logModel = $this->getTableName($model);
         $this->operationType = $type;
+        $this->logKey = $logKey;
         if (!empty($singleton->getRecordClass())) {
             $this->recordCurrentLog($singleton->getRecordClass());
         }

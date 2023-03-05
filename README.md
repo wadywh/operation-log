@@ -233,10 +233,22 @@ class RecordActionLog extends OperationLogRecordInterface
 \Operation\Log\facades\OperationLog::clearCurrentLog();
 ```
 
+### 获取当前操作表名称
+
+```php
+\Operation\Log\facades\OperationLog::getLogModel();
+```
+
 ### 获取当前操作类型
 
 ```php
 \Operation\Log\facades\OperationLog::getOperationType();
+```
+
+### 获取当前操作对象
+
+```php
+\Operation\Log\facades\OperationLog::getLogKey();
 ```
 
 ### 注入表模型命名空间映射关系

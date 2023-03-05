@@ -5,7 +5,7 @@ namespace Operation\Log\orm\illuminate;
 use Operation\Log\facades\IlluminateOrmLog;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
-use Operation\Log\facades\OperationLog;
+use Operation\Log\Singleton;
 
 class Builder extends \Illuminate\Database\Query\Builder
 {
@@ -66,13 +66,13 @@ class Builder extends \Illuminate\Database\Query\Builder
     }
 
     /**
-     * 生成Model对象t
+     * 生成Model对象
      * @return Model
      */
     private function generateModel(): Model
     {
         $name = $this->from;
-        $tableMap = OperationLog::getTableModelMapping();
+        $tableMap = Singleton::getInstance()->getTableModelMapping();
         if (isset($tableMap[$name])) {
             $modelNamespace = $tableMap[$name];
             $className = trim($modelNamespace, "\\");

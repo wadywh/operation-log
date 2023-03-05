@@ -4,6 +4,7 @@ namespace Operation\Log\orm\think;
 
 use Operation\Log\facades\OperationLog;
 use Operation\Log\facades\ThinkOrmLog;
+use Operation\Log\Singleton;
 use think\helper\Str;
 use think\Model;
 
@@ -99,7 +100,7 @@ class Query extends \think\db\Query
             return $this->getModel();
         }
         $name = $this->getName();
-        $tableMap = OperationLog::getTableModelMapping();
+        $tableMap = Singleton::getInstance()->getTableModelMapping();
         if (isset($tableMap[$name])) {
             $modelNamespace = $tableMap[$name];
             $className = trim($modelNamespace, "\\");

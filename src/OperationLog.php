@@ -29,9 +29,6 @@ class OperationLog
     // 当前操作类型
     protected $operationType;
 
-    // 外部当前操作日志记录类
-    protected $recordClass = null;
-
     const CREATED = "created";
     const BATCH_CREATED = "batch_created";
     const UPDATED = "updated";
@@ -68,36 +65,6 @@ class OperationLog
         $this->logByCurrent = '';
     }
 
-    public function setTableModelMapping(array $map)
-    {
-        $GLOBALS['tableModelMapping'] = $map;
-    }
-
-    public function getTableModelMapping(): array
-    {
-        return $GLOBALS['tableModelMapping'] ?? [];
-    }
-
-    public function setExecInfoSchema(bool $exec)
-    {
-        $GLOBALS['execInfoSchema'] = $exec;
-    }
-
-    public function getExecInfoSchema(): bool
-    {
-        return $GLOBALS['execInfoSchema'] ?? true;
-    }
-
-    public function setRecordTypes(array $types)
-    {
-        $GLOBALS['recordTypes'] = $types;
-    }
-
-    public function getRecordTypes(): array
-    {
-        return $GLOBALS['recordTypes'] ?? [];
-    }
-
     public function getOperationType(): string
     {
         return $this->operationType ?? '';
@@ -116,6 +83,26 @@ class OperationLog
         }
     }
 
+    public function setTableModelMapping(array $map)
+    {
+        Singleton::getInstance()->setTableModelMapping($map);
+    }
+
+    public function setExecInfoSchema(bool $exec)
+    {
+        Singleton::getInstance()->setExecInfoSchema($exec);
+    }
+
+    public function setRecordClass(object $class)
+    {
+        Singleton::getInstance()->setRecordClass($class);
+    }
+
+    public function setRecordTypes(array $types)
+    {
+        Singleton::getInstance()->setRecordTypes($types);
+    }
+
     /**
      * 获取表注释
      * @param $model
@@ -124,7 +111,7 @@ class OperationLog
     public function getTableComment($model): string
     {
         $table = $this->getTableName($model);
-        if (isset($model->tableComment) || !$this->getExecInfoSchema()) {
+        if (isset($model->tableComment) || !Singleton::getInstance()->getExecInfoSchema()) {
             return $model->tableComment ?: $table;
         }
 
@@ -156,7 +143,7 @@ class OperationLog
      */
     public function getColumnComment($model, $field): string
     {
-        if (isset($model->columnComment) || !$this->getExecInfoSchema()) {
+        if (isset($model->columnComment) || !Singleton::getInstance()->getExecInfoSchema()) {
             return $model->columnComment[$field] ?? $field;
         }
 
@@ -182,7 +169,8 @@ class OperationLog
 
     public function generateLog($model, string $type)
     {
-        if (!empty($this->getRecordTypes()) && !in_array($type, $this->getRecordTypes())) {
+        $singleton = Singleton::getInstance();
+        if (!empty($singleton->getRecordTypes()) && !in_array($type, $singleton->getRecordTypes())) {
             return  true;
         }
         if (isset($model->notRecordLog) && $model->notRecordLog) {
@@ -232,8 +220,8 @@ class OperationLog
             $this->logByCurrent = trim($logHeader . $log, "，");
         }
         $this->operationType = $type;
-        if (!empty($this->recordClass)) {
-            $this->recordCurrentLog(SingletonCustom::getInstance($this->recordClass));
+        if (!empty($singleton->getRecordClass())) {
+            $this->recordCurrentLog($singleton->getRecordClass());
         }
         return  true;
     }

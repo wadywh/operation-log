@@ -38,29 +38,6 @@ return [
 ];
 ```
 
-然后注册 MySQL 数据库连接的解析器。
-
-```php
-\Illuminate\Database\Connection::resolverFor('mysql', function ($connection, $database, $prefix, $config) {
-    return new \Operation\Log\orm\illuminate\MySqlConnection($connection, $database, $prefix, $config);
-});
-```
-
-注入表模型映射关系（可选）。
-
-```php
-\Operation\Log\facades\OperationLog::setTableModelMapping([
-    'test_user' => 'App\Models\Test\User',
-    'test_role' => 'App\Models\Test\Role',
-]);
-```
-
-配置不查information_schema库（可选）。
-
-```php
-\Operation\Log\facades\OperationLog::setExecInfoSchema(false);
-```
-
 ### ThinkPHP 使用
 
 在数据库的配置文件 config/database.php 中增加三个配置项 `query`、`modelNamespace` 和 `logKey`。
@@ -101,6 +78,29 @@ return [
     ],
     ...
 ];
+```
+
+然后注册 MySQL 数据库连接的解析器。
+
+```php
+\Illuminate\Database\Connection::resolverFor('mysql', function ($connection, $database, $prefix, $config) {
+    return new \Operation\Log\orm\illuminate\MySqlConnection($connection, $database, $prefix, $config);
+});
+```
+
+注入表模型映射关系（可选），如果没有配置映射关系且数据库配置没有配置`modelNamespace`则生成默认的基础模型。
+
+```php
+\Operation\Log\facades\OperationLog::setTableModelMapping([
+    'test_user' => 'App\Models\Test\User',
+    'test_role' => 'App\Models\Test\Role',
+]);
+```
+
+配置不查information_schema库（可选），部分业务场景中是没有此库的查询权限的，可根据实际业务场景进行配置。
+
+```php
+\Operation\Log\facades\OperationLog::setExecInfoSchema(false);
 ```
 
 ### 日志主键
@@ -179,27 +179,30 @@ namespace Operation\Log\Test\model;
 class User extends BaseModel
 {
     // 不生成操作日志
-    public bool $notRecordLog = true;
+    public $notRecordLog = true;
 }
 ```
 
-### 执行记录当前操作日志
-
-由外部方法实现具体的记录逻辑，可达到通用化、自动化的效果，外部类需先继承`OperationLogRecordInterface`接口，注入外部记录类，并实现`execRecordLog`方法进行记录。
+### 执行记录当前操作日志(可选)
+前提为项目启动时注入操作日志记录类：
+```php
+\Operation\Log\facades\OperationLog::setRecordClass($class);
+```
+操作日志表模型设置无需记录日志：
+```php
+public $notRecordLog = true;
+```
+由外部方法实现具体的记录逻辑，可达到通用化、自动化的效果，外部类需先继承`OperationLogRecordInterface`接口，并实现`execRecordLog`方法进行记录。
 
 ```php
 <?php
 
 namespace Lib;
 
-use Operation\Log\facades\OperationLog;
-
 class RecordActionLog extends OperationLogRecordInterface
 {
     public function execRecordLog()
     {
-       // 注入记录类
-       OperationLog::setRecordClass(self::class);
        // 记录逻辑
        // ......
     }
@@ -230,10 +233,22 @@ class RecordActionLog extends OperationLogRecordInterface
 \Operation\Log\facades\OperationLog::clearCurrentLog();
 ```
 
+### 获取当前操作类型
+
+```php
+\Operation\Log\facades\OperationLog::getOperationType();
+```
+
 ### 注入表模型命名空间映射关系
 
 ```php
 \Operation\Log\facades\OperationLog::setTableModelMapping($map);
+```
+
+### 注入外部操作日志记录类
+
+```php
+\Operation\Log\facades\OperationLog::setRecordClass($class);
 ```
 
 ### 设置不查information_schema库
@@ -242,7 +257,7 @@ class RecordActionLog extends OperationLogRecordInterface
 \Operation\Log\facades\OperationLog::setExecInfoSchema(false);
 ```
 
-### 设置记录操作类型
+### 设置允许记录的操作类型
 
 ```php
 \Operation\Log\facades\OperationLog::setRecordTypes(['updated', 'deleted']);

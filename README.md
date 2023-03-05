@@ -183,16 +183,51 @@ class User extends BaseModel
 }
 ```
 
-### 获取日志信息
+### 执行记录当前操作日志
+
+由外部方法实现具体的记录逻辑，可达到通用化、自动化的效果，外部类需先继承`OperationLogRecordInterface`接口，注入外部记录类，并实现`execRecordLog`方法进行记录。
+
+```php
+<?php
+
+namespace Lib;
+
+use Operation\Log\facades\OperationLog;
+
+class RecordActionLog extends OperationLogRecordInterface
+{
+    public function execRecordLog()
+    {
+       // 注入记录类
+       OperationLog::setRecordClass(self::class);
+       // 记录逻辑
+       // ......
+    }
+}
+```
+
+### 获取日志集合信息
 
 ```php
 \Operation\Log\facades\OperationLog::getLog();
 ```
 
-### 清除日志信息
+### 清除日志集合信息
 
 ```php
 \Operation\Log\facades\OperationLog::clearLog();
+```
+
+### 获取当前日志信息
+
+```php
+\Operation\Log\facades\OperationLog::getCurrentLog();
+```
+
+### 清除当前日志信息
+
+```php
+\Operation\Log\facades\OperationLog::clearCurrentLog();
 ```
 
 ### 注入表模型命名空间映射关系
@@ -205,4 +240,10 @@ class User extends BaseModel
 
 ```php
 \Operation\Log\facades\OperationLog::setExecInfoSchema(false);
+```
+
+### 设置记录操作类型
+
+```php
+\Operation\Log\facades\OperationLog::setRecordTypes(['updated', 'deleted']);
 ```

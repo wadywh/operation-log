@@ -20,8 +20,17 @@ class OperationLog
     // 字段注释
     protected $columnComment;
 
-    // 日志
+    // 日志集合
     protected $log = [""];
+
+    // 单次日志
+    protected $logByCurrent = '';
+
+    // 当前操作类型
+    protected $operationType;
+
+    // 外部当前操作日志记录类
+    protected $recordClass = null;
 
     const CREATED = "created";
     const BATCH_CREATED = "batch_created";
@@ -42,9 +51,21 @@ class OperationLog
         return trim(implode("", $log), PHP_EOL);
     }
 
+    public function getCurrentLog(): string
+    {
+        $log = $this->logByCurrent;
+        $this->clearCurrentLog();
+        return $log;
+    }
+
     public function clearLog()
     {
         $this->log = [""];
+    }
+
+    public function clearCurrentLog()
+    {
+        $this->logByCurrent = '';
     }
 
     public function setTableModelMapping(array $map)
@@ -65,6 +86,21 @@ class OperationLog
     public function getExecInfoSchema(): bool
     {
         return $GLOBALS['execInfoSchema'] ?? true;
+    }
+
+    public function setRecordTypes(array $types)
+    {
+        $GLOBALS['recordTypes'] = $types;
+    }
+
+    public function getRecordTypes(): array
+    {
+        return $GLOBALS['recordTypes'] ?? [];
+    }
+
+    public function getOperationType(): string
+    {
+        return $this->operationType ?? '';
     }
 
     public function beginTransaction()
@@ -146,6 +182,9 @@ class OperationLog
 
     public function generateLog($model, string $type)
     {
+        if (!empty($this->getRecordTypes()) && !in_array($type, $this->getRecordTypes())) {
+            return  true;
+        }
         if (isset($model->notRecordLog) && $model->notRecordLog) {
             return true;
         }
@@ -190,6 +229,21 @@ class OperationLog
         }
         if (!empty($log)) {
             array_splice($this->log, -1, 1, end($this->log) . trim($logHeader . $log, "，") . PHP_EOL);
+            $this->logByCurrent = trim($logHeader . $log, "，");
         }
+        $this->operationType = $type;
+        if (!empty($this->recordClass)) {
+            $this->recordCurrentLog(SingletonCustom::getInstance($this->recordClass));
+        }
+        return  true;
+    }
+
+    /**
+     * 记录当前操作日志
+     * @param OperationLogRecordInterface $logRecord
+     */
+    public function recordCurrentLog(OperationLogRecordInterface $logRecord)
+    {
+        $logRecord->execRecordLog();
     }
 }

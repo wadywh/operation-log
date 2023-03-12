@@ -73,12 +73,13 @@ class Log extends OperationLog implements OperationLogInterface
     /**
      * @param Model $model
      * @param string $key
+     * @param $value
      * @return string
      */
-    public function getValue($model, string $key): string
+    public function getValue($model, string $key, $value): string
     {
         $keyText = $key . "_text";
-        $value = $model->$keyText ?? $model->$key;
+        $value = $model->$keyText ?? $value;
 
         if (is_array($value)) {
             return json_encode($value, JSON_UNESCAPED_UNICODE);
@@ -90,13 +91,14 @@ class Log extends OperationLog implements OperationLogInterface
     /**
      * @param Model $model
      * @param string $key
+     * @param $value
      * @return string
      */
-    public function getOldValue($model, string $key): string
+    public function getOldValue($model, string $key, $value): string
     {
         $keyText = $key . "_text";
         $attributeFun = "get" . Str::studly(Str::lower($keyText)) . "Attribute";
-        return (string)(method_exists($model, $attributeFun) ? $model->$attributeFun($model->getOriginal($key)) : $model->getOriginal($key));
+        return (string)(method_exists($model, $attributeFun) ? $model->$attributeFun($model->getRawOriginal($key)) : $model->getRawOriginal($key));
     }
 
     /**

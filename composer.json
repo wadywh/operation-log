@@ -22,6 +22,8 @@
         "topthink/think-orm": "2.0.x-dev"
     },
     "require": {
-        "ext-json": "*"
+        "ext-json": "*",
+        "mockery/mockery": "^1.5",
+        "illuminate/encryption": "8.x-dev"
     }
 }

@@ -199,7 +199,7 @@ public $notRecordLog = true;
 
 namespace Lib;
 
-class RecordActionLog extends OperationLogRecordInterface
+class RecordActionLog implements OperationLogRecordInterface
 {
     public function execRecordLog()
     {

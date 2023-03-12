@@ -9,8 +9,8 @@ namespace Operation\Log;
  * @method executeSQL($model, $sql)
  * @method getAttributes($model)
  * @method getChangedAttributes($model)
- * @method getValue($model, string $key)
- * @method getOldValue($model, string $key)
+ * @method getValue($model, string $key, $value)
+ * @method getOldValue($model, string $key, $value)
  */
 class OperationLog
 {
@@ -215,7 +215,7 @@ class OperationLog
                         || (isset($model->ignoreLogFields) && is_array($model->ignoreLogFields) && in_array($key, $model->ignoreLogFields))) {
                         continue;
                     }
-                    $log .= "{$this->getColumnComment($model, $key)}：{$this->getValue($model, $key)}，";
+                    $log .= "{$this->getColumnComment($model, $key)}：{$this->getValue($model, $key, $value)}，";
                 }
                 break;
             case self::UPDATED:
@@ -227,7 +227,7 @@ class OperationLog
                         || (isset($model->ignoreLogFields) && is_array($model->ignoreLogFields) && in_array($key, $model->ignoreLogFields))) {
                         continue;
                     }
-                    $log .= "{$this->getColumnComment($model, $key)}由：{$this->getOldValue($model, $key)} 改为：{$this->getValue($model, $key)}，";
+                    $log .= "{$this->getColumnComment($model, $key)}由：{$this->getOldValue($model, $key, $value)} 改为：{$this->getValue($model, $key, $value)}，";
                 }
                 break;
         }

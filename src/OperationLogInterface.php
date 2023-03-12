@@ -47,9 +47,9 @@ interface OperationLogInterface
      */
     public function getChangedAttributes($model): array;
 
-    public function getValue($model, string $key): string;
+    public function getValue($model, string $key, $value): string;
 
-    public function getOldValue($model, string $key): string;
+    public function getOldValue($model, string $key, $value): string;
 
     public function created($model, array $data);
 

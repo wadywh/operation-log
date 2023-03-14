@@ -15,12 +15,14 @@
             "email": "1298025852@qq.com"
         }
     ],
-    "require": {
-      "ext-json": "*",
+    "require-dev": {
       "mockery/mockery": "^1.3",
       "illuminate/encryption": "^5.8",
       "phpunit/phpunit": "^7.5",
       "illuminate/database": "^5.8",
       "topthink/think-orm": "^2.0"
+    },
+    "require": {
+      "ext-json": "*"
     }
 }

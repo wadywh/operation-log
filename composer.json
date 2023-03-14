@@ -24,6 +24,6 @@
     "require": {
         "ext-json": "*",
         "mockery/mockery": "^1.5",
-        "illuminate/encryption": "8.x-dev"
+        "illuminate/encryption": "5.8.36"
     }
 }

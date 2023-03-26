@@ -183,32 +183,6 @@ class User extends BaseModel
 }
 ```
 
-### 执行记录当前操作日志(可选)
-前提为项目启动时注入操作日志记录类：
-```php
-\Operation\Log\facades\OperationLog::setRecordClass($class);
-```
-操作日志表模型设置无需记录日志：
-```php
-public $notRecordLog = true;
-```
-由外部方法实现具体的记录逻辑，可达到通用化、自动化的效果，外部类需先继承`OperationLogRecordInterface`接口，并实现`execRecordLog`方法进行记录。
-
-```php
-<?php
-
-namespace Lib;
-
-class RecordActionLog implements OperationLogRecordInterface
-{
-    public function execRecordLog()
-    {
-       // 记录逻辑
-       // ......
-    }
-}
-```
-
 ### 获取日志集合信息
 
 ```php
@@ -221,46 +195,10 @@ class RecordActionLog implements OperationLogRecordInterface
 \Operation\Log\facades\OperationLog::clearLog();
 ```
 
-### 获取当前日志信息
-
-```php
-\Operation\Log\facades\OperationLog::getCurrentLog();
-```
-
-### 清除当前日志信息
-
-```php
-\Operation\Log\facades\OperationLog::clearCurrentLog();
-```
-
-### 获取当前操作表名称
-
-```php
-\Operation\Log\facades\OperationLog::getLogModel();
-```
-
-### 获取当前操作类型
-
-```php
-\Operation\Log\facades\OperationLog::getOperationType();
-```
-
-### 获取当前操作对象
-
-```php
-\Operation\Log\facades\OperationLog::getLogKey();
-```
-
 ### 注入表模型命名空间映射关系
 
 ```php
 \Operation\Log\facades\OperationLog::setTableModelMapping($map);
-```
-
-### 注入外部操作日志记录类
-
-```php
-\Operation\Log\facades\OperationLog::setRecordClass($class);
 ```
 
 ### 设置不查information_schema库
@@ -273,4 +211,10 @@ class RecordActionLog implements OperationLogRecordInterface
 
 ```php
 \Operation\Log\facades\OperationLog::setRecordTypes(['updated', 'deleted']);
+```
+
+### 设置程序运行结束调用的方法
+
+```php
+\Operation\Log\facades\OperationLog::setShutdownFunction([new $className, $methodName]);
 ```

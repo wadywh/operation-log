@@ -184,6 +184,8 @@ class LogTest extends Base
     // 模拟单事务回滚
     public function testWorkBack()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('模拟单事务回滚');
         Manager::beginTransaction();
         try {
             $user = new User();
@@ -260,6 +262,11 @@ class LogTest extends Base
                 Manager::beginTransaction();
                 try {
                     $user->delete();
+                    $user = new User();
+                    $user->name = 'test';
+                    $user->sex = 1;
+                    $user->price = 100;
+                    $user->save();
                     // 这里开始抛异常
                     throw new Exception('模拟嵌套事务部分回滚');
                     Manager::commit();
@@ -286,6 +293,8 @@ class LogTest extends Base
     // 模拟嵌套事务全部回滚
     public function testWorkNestBackAll()
     {
+        $this->expectException(Exception::class);
+        $this->expectExceptionMessage('模拟嵌套事务全部回滚');
         Manager::beginTransaction();
         try {
             $user = new User();
@@ -319,7 +328,6 @@ class LogTest extends Base
             Manager::rollBack();
             throw new Exception($e->getMessage());
         }
-        $this->assertTrue(true);
         echo OperationLog::getLog();
     }
 
@@ -327,10 +335,8 @@ class LogTest extends Base
     // 最终操作日志信息
     public function testCurrentLog()
     {
-        // 以行项目为单位每次获取
-        OperationLog::setRecordClass(OperationLogTest::class);
         // 最终操作日志获取，该函数会在PHP程序运行结束后自动调用
-        register_shutdown_function([new OperationLogTest(), 'finalLog']);
+        OperationLog::setShutdownFunction([new OperationLogTest(), 'finalLog']);
 
         // 单数据新增
         $user = new User();

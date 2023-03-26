@@ -18,4 +18,20 @@ class Base extends Model
     {
         return (new Encrypter(md5('operation_log'), 'AES-256-CBC'))->decrypt($data);
     }
+
+    /**
+     * Get a fresh instance of the model's attributes.
+     *
+     * @param  string|null  $key
+     * @param  mixed  $default
+     * @return array|mixed
+     */
+    public function getRawOriginal($key = null, $default = null)
+    {
+        if (!is_null($key)) {
+            return $this->getOriginal($key, $default);
+        }
+
+        return $this->original;
+    }
 }

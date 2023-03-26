@@ -7,15 +7,10 @@ use Operation\Log\Facade;
 /**
  * @method static getLog()
  * @method static clearLog()
- * @method static getCurrentLog()
- * @method static clearCurrentLog()
- * @method static getLogModel()
- * @method static getOperationType()
- * @method static getLogKey()
  * @method static setTableModelMapping(array $map)
  * @method static setExecInfoSchema(bool $exec)
- * @method static setRecordClass($class)
  * @method static setRecordTypes(array $types)
+ * @method static setShutdownFunction($function, ...$parameters)
  * @method static beginTransaction()
  * @method static rollBackTransaction()
  */

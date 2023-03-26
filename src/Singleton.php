@@ -21,9 +21,6 @@ class Singleton
     // 设置允许记录的操作类型
     private $recordTypes = [];
 
-    // 外部当前操作日志记录类
-    private $recordClass = null;
-
     private function __construct(){}
 
     private function __clone(){}
@@ -64,16 +61,6 @@ class Singleton
     public function getRecordTypes(): array
     {
         return $this->recordTypes;
-    }
-
-    public function setRecordClass($class)
-    {
-        $this->recordClass = new $class;
-    }
-
-    public function getRecordClass()
-    {
-        return $this->recordClass;
     }
 
 }

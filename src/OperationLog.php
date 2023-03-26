@@ -23,18 +23,6 @@ class OperationLog
     // 日志集合
     protected $log = [""];
 
-    // 单次日志
-    protected $logByCurrent = '';
-
-    // 当前操作模型
-    protected $logModel;
-
-    // 当前操作类型
-    protected $operationType;
-
-    // 当前操作对象
-    protected $logKey;
-
     const CREATED = "created";
     const BATCH_CREATED = "batch_created";
     const UPDATED = "updated";
@@ -47,43 +35,16 @@ class OperationLog
         Facade::setResolvedInstance(self::class, $this);
     }
 
-    public function getLog(): string
+    public function getLog()
     {
         $log = $this->log;
         $this->clearLog();
         return trim(implode("", $log), PHP_EOL);
     }
 
-    public function getCurrentLog(): string
-    {
-        $log = $this->logByCurrent;
-        $this->clearCurrentLog();
-        return $log;
-    }
-
     public function clearLog()
     {
         $this->log = [""];
-    }
-
-    public function clearCurrentLog()
-    {
-        $this->logByCurrent = '';
-    }
-
-    public function getLogModel()
-    {
-        return $this->logModel;
-    }
-
-    public function getOperationType(): string
-    {
-        return $this->operationType ?? '';
-    }
-
-    public function getLogKey()
-    {
-        return $this->logKey;
     }
 
     public function beginTransaction()
@@ -109,14 +70,14 @@ class OperationLog
         Singleton::getInstance()->setExecInfoSchema($exec);
     }
 
-    public function setRecordClass($class)
-    {
-        Singleton::getInstance()->setRecordClass($class);
-    }
-
     public function setRecordTypes(array $types)
     {
         Singleton::getInstance()->setRecordTypes($types);
+    }
+
+    public function setShutdownFunction($function, ...$parameters)
+    {
+        register_shutdown_function($function, ...$parameters);
     }
 
     /**
@@ -183,6 +144,12 @@ class OperationLog
         return (string)($comment ?: $field);
     }
 
+    /**
+     * 生成变更日志
+     * @param $model
+     * @param string $type
+     * @return bool
+     */
     public function generateLog($model, string $type)
     {
         $singleton = Singleton::getInstance();
@@ -231,25 +198,12 @@ class OperationLog
                 }
                 break;
         }
+
         if (!empty($log)) {
             array_splice($this->log, -1, 1, end($this->log) . trim($logHeader . $log, "，") . PHP_EOL);
-            $this->logByCurrent = trim($logHeader . $log, "，");
         }
-        $this->logModel = $this->getTableName($model);
-        $this->operationType = $type;
-        $this->logKey = $model->$logKey;
-        if (!empty($singleton->getRecordClass())) {
-            $this->recordCurrentLog($singleton->getRecordClass());
-        }
+
         return  true;
     }
 
-    /**
-     * 记录当前操作日志
-     * @param OperationLogRecordInterface $logRecord
-     */
-    public function recordCurrentLog(OperationLogRecordInterface $logRecord)
-    {
-        $logRecord->execRecordLog();
-    }
 }
